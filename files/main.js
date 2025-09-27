@@ -112,7 +112,7 @@ function createSocialButtons() {
     SOCIALS.forEach(social => {
         const button = document.createElement('button');
         button.classList.add('social-btn', 'box-shadow');
-        button.innerHTML = `<img src="img/logo/${social.name}.png" class="logo" alt="${social.name}"/>`;
+        button.innerHTML = `<img src="https://khoindvn.io.vn/img/logo/${social.name}.png" class="logo" alt="${social.name}"/>`;
         button.addEventListener('click', () => {
             window.open(social.url, '_blank');
         });
