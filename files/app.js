@@ -35,13 +35,13 @@ const apps = [
         name: 'Krnl Global ✅',
         url: 'https://bbmkts.com/go/ipakrnlqt',
         img: 'https://sf-static.upanhlaylink.com/img/image_2025092931c4f85956a4f1ed99daa1271103e687.jpg',
-        descriptions: 'Mod Roblox Cập Nhật Ngày 26/09/2025'
+        descriptions: 'Mod Roblox Cập Nhật Ngày 02/10/2025'
     },
     {
         name: 'Delta Global ✅',
         url: 'https://bbmkts.com/go/ipadeltaqt',
         img: 'https://sf-static.upanhlaylink.com/img/image_2025092931c4f85956a4f1ed99daa1271103e687.jpg',
-        descriptions: 'Mod Roblox Cập Nhật Ngày 26/9/2025'
+        descriptions: 'Mod Roblox Cập Nhật Ngày 02/10/2025'
     },{
         name: 'File iPA Liên Quân',
         url: 'https://bbmkts.com/go/allaov',
