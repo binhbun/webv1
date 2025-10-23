@@ -8,10 +8,10 @@ const apps = [
         descriptions: 'Hack Map Đánh Kín Update antiband Cập Nhật Ngày 20/10/2025'
     },
     {
-        name: '𝐋𝐢𝐞̂𝐧 𝐐𝐮𝐚̂𝐧 𝐌𝐨𝐛𝐢𝐥𝐞 Mod Skin ✅',
-        url: 'https://bbmkts.com/go/aovhack',
+        name: '<strong><em>KEY HACK Liên Quân Mobile 30 NGÀY ✅</em></strong>',
+        url: 'https://bbmkts.com/go/keyaov',
         img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7f/f9/70/7ff970e7-3b59-b769-34b5-e18c10e48990/AppIcon-1x_U007emarketing-0-11-0-85-220-0.png/512x512bb.jpg',
-        descriptions: 'Bản Mod Skin Update antiband cập nhật Ngày 20/10/2025'
+        descriptions: 'Key Hack Liên Quân 30 ngày Cập Nhật Ngày 20/10/2025'
     },
     {
         name: 'TrollStore X ✅',
