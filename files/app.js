@@ -59,8 +59,8 @@ const apps = [
 const ksignApps = [
         {
         name: 'KSign New Cert ✅',
-        url: 'https://api.khoindvn.io.vn/9jOxw6',
-        img: 'img/pf/ksign.png',
+        url: 'http://bit.ly/4nu8368',
+        img: 'https://khoindvn.com/files/ksign.png',
         descriptions: 'Guangzhou Huahan Educational & Technology Co.,Ltd.'   
     },
     {
