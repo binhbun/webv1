@@ -42,17 +42,18 @@ const apps = [
         url: 'https://bbmkts.com/go/ipadeltaqt',
         img: 'https://sf-static.upanhlaylink.com/img/image_2025092931c4f85956a4f1ed99daa1271103e687.jpg',
         descriptions: 'Mod Roblox Cập Nhật Ngày 20/10/2025'
-    },{
-        name: 'File iPA Liên Quân',
-        url: 'https://bbmkts.com/go/allaov',
-        img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7f/f9/70/7ff970e7-3b59-b769-34b5-e18c10e48990/AppIcon-1x_U007emarketing-0-11-0-85-220-0.png/512x512bb.jpg',
-        descriptions: 'Gồm file 2 iPA Map Và Mod Skin Cập Nhật Ngày 20/10/2025'
-    },{
-        name: 'File iPA Roblox VN',
-        url: 'https://bbmkts.com/go/allroblox',
-        img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/0f/cd/0c/0fcd0c28-8cea-2165-85f0-731e14618522/AppIcon_VNGGames_New-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg',
-        descriptions: 'Gồm file 2 iPA Krnl VN Và Delta VN Cập Nhật Ngày 20/10/2025'
     },
+    // {
+    //     name: 'File iPA Liên Quân',
+    //     url: 'https://bbmkts.com/go/allaov',
+    //     img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7f/f9/70/7ff970e7-3b59-b769-34b5-e18c10e48990/AppIcon-1x_U007emarketing-0-11-0-85-220-0.png/512x512bb.jpg',
+    //     descriptions: 'Gồm file 2 iPA Map Và Mod Skin Cập Nhật Ngày 20/10/2025'
+    // },{
+    //     name: 'File iPA Roblox VN',
+    //     url: 'https://bbmkts.com/go/allroblox',
+    //     img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/0f/cd/0c/0fcd0c28-8cea-2165-85f0-731e14618522/AppIcon_VNGGames_New-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg',
+    //     descriptions: 'Gồm file 2 iPA Krnl VN Và Delta VN Cập Nhật Ngày 20/10/2025'
+    // },
 ];
 
 const ksignApps = [
