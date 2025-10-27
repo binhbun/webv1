@@ -5,43 +5,43 @@ const apps = [
         name: '𝐋𝐢𝐞̂𝐧 𝐐𝐮𝐚̂𝐧 𝐌𝐨𝐛𝐢𝐥𝐞 Hack Map ✅ ',
         url: 'https://bbmkts.com/go/aovhack',
         img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7f/f9/70/7ff970e7-3b59-b769-34b5-e18c10e48990/AppIcon-1x_U007emarketing-0-11-0-85-220-0.png/512x512bb.jpg',
-        descriptions: 'Hack Map Đánh Kín Update antiband Cập Nhật Ngày 20/10/2025'
+        // descriptions: 'Hack Map Đánh Kín Update antiband Cập Nhật Ngày 20/10/2025'
     },
     {
         name: '<strong><em>KEY HACK Liên Quân Mobile 30 NGÀY ✅</em></strong>',
         url: 'https://bbmkts.com/go/keyaov',
         img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7f/f9/70/7ff970e7-3b59-b769-34b5-e18c10e48990/AppIcon-1x_U007emarketing-0-11-0-85-220-0.png/512x512bb.jpg',
-        descriptions: 'Key Hack Liên Quân 30 ngày Cập Nhật Ngày 20/10/2025'
+        // descriptions: 'Key Hack Liên Quân 30 ngày Cập Nhật Ngày 20/10/2025'
     },
     {
         name: 'TrollStore X ✅',
         url: 'https://bbmkts.com/go/troll',
         img: 'https://raw.githubusercontent.com/alfiecg24/TrollInstallerX/main/Resources/Icon.png',
-        descriptions: 'Hỗ Trợ iOS 14.0-16.6.1 Cập Nhật Ngày 20/10/2025'
+        // descriptions: 'Hỗ Trợ iOS 14.0-16.6.1 Cập Nhật Ngày 20/10/2025'
     },
     {
         name: 'Krnl VN ✅',
         url: 'https://bbmkts.com/go/ipakrnl',
         img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/0f/cd/0c/0fcd0c28-8cea-2165-85f0-731e14618522/AppIcon_VNGGames_New-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg',
-        descriptions: 'Mod Roblox Cập Nhật Ngày 20/10/2025'
+        // descriptions: 'Mod Roblox Cập Nhật Ngày 20/10/2025'
     },
     {
         name: 'DeltaVN ✅',
         url: 'https://bbmkts.com/go/ipadelta',
         img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/0f/cd/0c/0fcd0c28-8cea-2165-85f0-731e14618522/AppIcon_VNGGames_New-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg',
-        descriptions: 'Mod Roblox Cập Nhật Ngày 26/9/2025'
+        // descriptions: 'Mod Roblox Cập Nhật Ngày 26/9/2025'
     },
     {
         name: 'Krnl Global ✅',
         url: 'https://bbmkts.com/go/ipakrnlqt',
         img: 'https://sf-static.upanhlaylink.com/img/image_2025092931c4f85956a4f1ed99daa1271103e687.jpg',
-        descriptions: 'Mod Roblox Cập Nhật Ngày 20/10/2025'
+        // descriptions: 'Mod Roblox Cập Nhật Ngày 20/10/2025'
     },
     {
         name: 'Delta Global ✅',
         url: 'https://bbmkts.com/go/ipadeltaqt',
         img: 'https://sf-static.upanhlaylink.com/img/image_2025092931c4f85956a4f1ed99daa1271103e687.jpg',
-        descriptions: 'Mod Roblox Cập Nhật Ngày 20/10/2025'
+        // descriptions: 'Mod Roblox Cập Nhật Ngày 20/10/2025'
     },
     // {
     //     name: 'File iPA Liên Quân',
