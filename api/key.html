@@ -1,0 +1,15 @@
+<script>
+const links = [
+    "https://haxvip365.fun/key1.php?key=modvip65955",
+    "https://haxvip365.fun/key1.php?key=modvip33772",
+  "https://haxvip365.fun/key1.php?key=modvip86884"
+];
+
+let counter = parseInt(localStorage.getItem("rr_counter") || "0");
+counter++;
+localStorage.setItem("rr_counter", counter);
+
+const index = (counter - 1) % links.length;
+
+location.href = links[index];
+</script>
