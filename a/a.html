@@ -1,0 +1,167 @@
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <objc/runtime.h>
+
+#define BASE_URL @"https://key.gmvmoba.com/connect" 
+#define GAME_NAME @"PUBG" 
+#define GET_KEY_URL @"https://key.gmvmoba.com/gmvmoba/getkeyapp"
+#define ZALO_INFO @"Mua Key Zalo: 0965870531"
+
+@interface RotateViewController : UIViewController
+@end
+
+@implementation RotateViewController
+- (BOOL)shouldAutorotate { 
+    return YES; 
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return [[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        self.view.window.frame = CGRectMake(0, 0, size.width, size.height);
+    }];
+}
+@end
+
+@interface KeyManager : NSObject
+@property (nonatomic, strong) UIWindow *alertWindow;
++ (instancetype)sharedInstance;
++ (void)showMainAlert:(NSString *)initialKey;
++ (void)verifyKey:(NSString *)userKey;
+@end
+
+@implementation KeyManager
+
++ (instancetype)sharedInstance {
+    static KeyManager *shared = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        shared = [[KeyManager alloc] init];
+    });
+    return shared;
+}
+
++ (void)showToast:(NSString *)message {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertController *toast = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIViewController *top = [UIApplication sharedApplication].keyWindow.rootViewController;
+        while (top.presentedViewController) top = top.presentedViewController;
+        [top presentViewController:toast animated:YES completion:nil];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [toast dismissViewControllerAnimated:YES completion:nil];
+        });
+    });
+}
+
++ (void)showMainAlert:(NSString *)initialKey {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (![KeyManager sharedInstance].alertWindow) {
+            [KeyManager sharedInstance].alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+            [KeyManager sharedInstance].alertWindow.windowLevel = UIWindowLevelAlert + 1;
+            [KeyManager sharedInstance].alertWindow.rootViewController = [RotateViewController new];
+            [KeyManager sharedInstance].alertWindow.backgroundColor = [UIColor clearColor];
+            [[KeyManager sharedInstance].alertWindow makeKeyAndVisible];
+        }
+
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"💥ĐĂNG NHẬP💥" 
+                                                                       message:nil 
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+
+        NSString *msgText = [NSString stringWithFormat: ZALO_INFO];
+        NSMutableAttributedString *attrMsg = [[NSMutableAttributedString alloc] initWithString:msgText];
+        NSRange zaloRange = [msgText rangeOfString:ZALO_INFO];
+        if (zaloRange.location != NSNotFound) {
+            [attrMsg addAttribute:NSForegroundColorAttributeName value:[UIColor systemRedColor] range:zaloRange];
+            [attrMsg addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:14.0] range:zaloRange];
+        }
+        [alert setValue:attrMsg forKey:@"attributedMessage"];
+
+        [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"Dán key vào đây...";
+            textField.textAlignment = NSTextAlignmentCenter;
+            if (initialKey) textField.text = initialKey;
+            
+            UIButton *pasteButton = [UIButton buttonWithType:UIButtonTypeSystem];
+            [pasteButton setTitle:@"Dán " forState:UIControlStateNormal];
+            pasteButton.frame = CGRectMake(0, 0, 45, 30);
+            [pasteButton addTarget:self action:@selector(handlePaste:) forControlEvents:UIControlEventTouchUpInside];
+            textField.rightView = pasteButton;
+            textField.rightViewMode = UITextFieldViewModeAlways;
+            objc_setAssociatedObject(pasteButton, "targetField", textField, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }];
+
+        [alert addAction:[UIAlertAction actionWithTitle:@"Lấy Key" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:GET_KEY_URL] options:@{} completionHandler:nil];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self showMainAlert:alert.textFields.firstObject.text];
+            });
+        }]];
+
+        [alert addAction:[UIAlertAction actionWithTitle:@"Xác Nhận" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self verifyKey:alert.textFields.firstObject.text];
+        }]];
+
+        [[KeyManager sharedInstance].alertWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+    });
+}
+
++ (void)handlePaste:(UIButton *)sender {
+    UITextField *textField = (UITextField *)objc_getAssociatedObject(sender, "targetField");
+    if (textField) textField.text = [UIPasteboard generalPasteboard].string;
+}
+
++ (void)verifyKey:(NSString *)userKey {
+    if (!userKey || userKey.length == 0) {
+        [self showToast:@"⚠️ Vui lòng nhập mã!"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self showMainAlert:nil];
+        });
+        return;
+    }
+
+    NSString *serial = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:BASE_URL]];
+    [request setHTTPMethod:@"POST"];
+    NSString *params = [NSString stringWithFormat:@"game=%@&user_key=%@&serial=%@", GAME_NAME, userKey, serial];
+    [request setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                [self showToast:@"⛔ Lỗi kết nối!"];
+                [self showMainAlert:userKey];
+                return;
+            }
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([json[@"status"] boolValue]) {
+                [[NSUserDefaults standardUserDefaults] setObject:userKey forKey:@"saved_key"];
+                NSString *successMsg = [NSString stringWithFormat:@"✅ Thành Công!\nHạn: %@", json[@"data"][@"EXP"]];
+                [self showToast:successMsg];
+                [KeyManager sharedInstance].alertWindow.hidden = YES;
+                [KeyManager sharedInstance].alertWindow = nil;
+            } else {
+                [self showToast:[@"⛔ " stringByAppendingString:json[@"reason"] ?: @"Mã sai!"]];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self showMainAlert:userKey];
+                });
+            }
+        });
+    }] resume];
+}
+
+@end
+
+__attribute__((constructor))
+static void initialize() {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSString *storedKey = [[NSUserDefaults standardUserDefaults] objectForKey:@"saved_key"];
+        if (storedKey) [KeyManager verifyKey:storedKey];
+        else [KeyManager showMainAlert:nil];
+    });
+}
