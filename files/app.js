@@ -400,9 +400,7 @@ const cloudIcon = `<svg class="icon" style="width: 24px;height: 24px;vertical-al
 
 // DOM ELEMENTS
 
-const appContainer = document.querySelector('.app-section');
-const ksignContainer = document.querySelector('.ksign-section');
-const esignContainer = document.querySelector('.esign-section');
+const appContainer = document.querySelector('.app-sections');
 
 // UTILITY FUNCTIONS
 
@@ -436,24 +434,9 @@ function addClickHandler(container) {
 
 // Render apps in their respective containers
 if (appContainer) {
-    apps.forEach(app => {
-        appContainer.innerHTML += render(app.name, app.url, app.img, app.descriptions);
+    apps.forEach(apps => {
+        appContainer.innerHTML += render(apps.name, apps.url, apps.img, apps.descriptions);
     });
 }
-
-if (ksignContainer) {
-    ksignApps.forEach(ksign => {
-        ksignContainer.innerHTML += render(ksign.name, ksign.url, ksign.img, ksign.descriptions);
-    });
-}
-
-if (esignContainer) {
-    esignApps.forEach(esign => {
-        esignContainer.innerHTML += render(esign.name, esign.url, esign.img, esign.descriptions);
-    });
-}
-
 // Add click handlers to all containers
 addClickHandler(appContainer);
-addClickHandler(ksignContainer);
-addClickHandler(esignContainer);
