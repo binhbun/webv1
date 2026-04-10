@@ -1,1 +1,201 @@
-const TYPING_CONFIG={texts:["Seller.","Designer.","Developer."],typingSpeed:110,deletingSpeed:55,pauseAfterType:2200};let tIdx=0,cIdx=0,del=!1;function typeText(){let e=document.getElementById("typed-text");if(!e)return;let t=TYPING_CONFIG.texts[tIdx];if(del)e.textContent=t.slice(0,--cIdx),0===cIdx&&(del=!1,tIdx=(tIdx+1)%TYPING_CONFIG.texts.length),setTimeout(typeText,TYPING_CONFIG.deletingSpeed);else{if(e.textContent=t.slice(0,++cIdx),cIdx===t.length)return del=!0,setTimeout(typeText,TYPING_CONFIG.pauseAfterType);setTimeout(typeText,TYPING_CONFIG.typingSpeed)}}function animateSkillBars(){document.querySelectorAll(".skill-fill").forEach(e=>{e.style.width=e.dataset.percent||"0%"})}function initNav(){let e=document.getElementById("menu-button"),t=document.querySelector(".nav-links");e&&t&&(e.addEventListener("click",()=>{let l=t.classList.toggle("show");e.setAttribute("aria-expanded",String(l))}),t.querySelectorAll("a").forEach(e=>e.addEventListener("click",()=>t.classList.remove("show"))))}const SOCIAL_ICONS={facebook:'<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="6" fill="#1877f2"/><path d="M16 8h-2a1 1 0 0 0-1 1v2h3l-.5 3H13v7h-3v-7H8v-3h2V9a4 4 0 0 1 4-4h2v3z" fill="white"/></svg>',messenger:'<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="6" fill="#0084ff"/><path d="M12 2C6.5 2 2 6.2 2 11.4c0 2.9 1.4 5.4 3.6 7.1v3.5l3.3-1.8c.9.2 1.8.3 2.1.3 5.5 0 10-4.2 10-9.4S17.5 2 12 2zm1 12.6l-2.5-2.7-4.9 2.7 5.4-5.7 2.6 2.7 4.8-2.7-5.4 5.7z" fill="white"/></svg>',telegram:'<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="6" fill="#2196f3"/><path d="M20.7 3.3L2.3 10.2c-.9.4-.9 1 0 1.2l4.6 1.4 1.7 5.3c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.7l3-14.2c.3-1.1-.4-1.6-1.1-1.5zm-3.4 4.4L9 14.5l-.3 3.3-1.7-5.3 11.3-4.8z" fill="white"/></svg>',zalo:'<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="6" fill="#0068ff"/><text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" font-family="-apple-system,Arial,sans-serif" font-weight="900" font-size="10" fill="white">Zalo</text></svg>'};function initSocials(){let e=document.querySelector(".social-buttons");e&&[{name:"facebook",url:"https://www.facebook.com/share/1XH7kThUjd/?mibextid=wwXIfr"},{name:"messenger",url:"https://m.me/khoindvn.esigncert"},{name:"telegram",url:"https://t.me/m/7P3IVuTSYTQ1"},{name:"zalo",url:"https://zalo.me/0386495528"},].forEach(({name:t,url:l})=>{let n=document.createElement("button");n.className="social-btn",n.setAttribute("aria-label",t),n.innerHTML=SOCIAL_ICONS[t]||"",n.addEventListener("click",()=>window.open(l,"_blank")),e.appendChild(n)})}function initTheme(){var e=document.getElementById("themeBtn"),t=document.getElementById("themeIcon");if(e){var l=!1;e.addEventListener("click",function(){l=!l,document.documentElement.setAttribute("data-theme",l?"dark":""),t.innerHTML=l?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>':'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'})}}function onScroll(){let e=document.querySelector(".skills-card");e&&e.getBoundingClientRect().top<window.innerHeight&&(animateSkillBars(),window.removeEventListener("scroll",onScroll,{passive:!0}))}document.addEventListener("DOMContentLoaded",()=>{initNav(),initSocials(),initTheme(),typeText(),onScroll(),window.addEventListener("scroll",onScroll,{passive:!0})}),setInterval(function(){(function(){return!1}).constructor("debugger").call()},300);
+
+// CONFIGURATION & DATA
+
+const TYPING_CONFIG = {
+    texts: ["Seller.", "Designer.", "Developer."],
+    typingSpeed: 100,
+    deletingSpeed: 50,
+    pauseBeforeDeleting: 2000
+};
+
+const SOCIALS = [
+    {
+        name: 'facebook',
+        url: 'https://www.facebook.com/share/1XH7kThUjd/?mibextid=wwXIfr'
+    },
+    {
+        name: 'messenger',
+        url: 'https://m.me/khoindvn.esigncert'
+    },
+    {
+        name: 'telegram',
+        url: 'https://t.me/m/7P3IVuTSYTQ1'
+    },
+    {
+        name: 'zalo',
+        url: 'https://zalo.me/0386495528'
+    }
+];
+
+// TYPING ANIMATION STATE
+
+let textIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
+// UTILITY FUNCTIONS
+
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+// TYPING ANIMATION
+
+function typeText() {
+    const currentText = TYPING_CONFIG.texts[textIndex];
+    const typedTextElement = document.getElementById("typed-text");
+    
+    if (!isDeleting && charIndex < currentText.length) {
+        typedTextElement.innerHTML = currentText.substring(0, charIndex + 1);
+        charIndex++;
+        setTimeout(typeText, TYPING_CONFIG.typingSpeed);
+    } else if (isDeleting && charIndex > 0) {
+        typedTextElement.innerHTML = currentText.substring(0, charIndex - 1);
+        charIndex--;
+        setTimeout(typeText, TYPING_CONFIG.deletingSpeed);
+    } else if (!isDeleting && charIndex === currentText.length) {
+        isDeleting = true;
+        setTimeout(typeText, TYPING_CONFIG.pauseBeforeDeleting);
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % TYPING_CONFIG.texts.length;
+        setTimeout(typeText, TYPING_CONFIG.typingSpeed);
+    }
+}
+
+// SKILL BARS ANIMATION
+
+function animateSkillBars() {
+    const skillBars = document.querySelectorAll('.skill-fill');
+    
+    skillBars.forEach(bar => {
+        const percent = bar.getAttribute('data-percent');
+        bar.style.width = percent;
+    });
+}
+
+function handleSkillsAnimation() {
+    const skillSection = document.querySelector('.skills-section');
+    if (isInViewport(skillSection)) {
+        animateSkillBars();
+        window.removeEventListener('scroll', handleSkillsAnimation);
+    }
+}
+
+// NAVIGATION MENU
+
+function initializeMenuToggle() {
+    const menuButton = document.getElementById('menu-button');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (menuButton && navLinks) {
+        menuButton.addEventListener('click', function() {
+            navLinks.classList.toggle('show');
+            navLinks.classList.toggle('box-shadow');
+        });
+    }
+}
+
+// SOCIAL BUTTONS
+
+function createSocialButtons() {
+    const socialButtonContainer = document.querySelector('.social-buttons');
+    
+    if (!socialButtonContainer) return;
+    
+    SOCIALS.forEach(social => {
+        const button = document.createElement('button');
+        button.classList.add('social-btn', 'box-shadow');
+        button.innerHTML = `<img src="/files/${social.name}.png" class="logo" alt="${social.name}"/>`;
+        button.addEventListener('click', () => {
+            window.open(social.url, '_blank');
+        });
+        socialButtonContainer.appendChild(button);
+    });
+}
+
+// DARK MODE TOGGLE
+
+function initializeDarkModeToggle() {
+    const colorModeButton = document.querySelector('#colorMode, .color-mode, [data-color-mode]');
+    
+    if (!colorModeButton) return;
+    
+    colorModeButton.addEventListener('click', toggleDarkMode);
+}
+
+function toggleDarkMode() {
+    const elements = {
+        body: document.body,
+        skillsSection: document.querySelector('.skills-section'),
+        wave1: document.querySelector('#wave1'),
+        wave2: document.querySelector('#wave2'),
+        svg1: document.querySelector('.svg1'),
+        svg2: document.querySelector('.svg2')
+    };
+    
+    const currentDarkMode = document.body.style.getPropertyValue("--dark-mode") - 0;
+    const isDarkMode = Boolean(currentDarkMode);
+    
+    elements.body.style.setProperty("--dark-mode", 1 - currentDarkMode);
+    
+    elements.body.style.color = isDarkMode ? 'black' : 'white';
+    elements.body.style.background = isDarkMode 
+        ? 'linear-gradient(0deg, #94bbff, #fff)' 
+        : 'linear-gradient(0deg, #777272, #000)';
+    
+    if (elements.skillsSection) {
+        elements.skillsSection.style.backgroundColor = isDarkMode ? 'white' : 'black';
+    }
+    
+    if (elements.svg1) {
+        elements.svg1.style.fill = isDarkMode ? 'white' : 'black';
+    }
+    
+    if (elements.wave2) {
+        elements.wave2.style.backgroundColor = isDarkMode ? 'white' : 'black';
+    }
+    
+    if (elements.svg2) {
+        elements.svg2.style.fill = isDarkMode ? '#f4f4f4' : 'black';
+    }
+}
+
+// ENTRANCE ANIMATION
+
+function playEntranceAnimation() {
+    const enterElement = document.querySelector('.enter');
+    if (!enterElement) return;
+    
+    for (let i = 20; i >= 0; i--) {
+        setTimeout(() => {
+            const blurValue = `blur(${i}px)`;
+            enterElement.style.backdropFilter = blurValue;
+            enterElement.style.WebkitBackdropFilter = blurValue;
+        }, 40 * (20 - i));
+    }
+}
+
+// INITIALIZATION
+
+function initializeApp() {
+    initializeMenuToggle();
+    createSocialButtons();
+    initializeDarkModeToggle();
+    playEntranceAnimation();
+    
+    typeText();
+    handleSkillsAnimation();
+    
+    window.addEventListener('scroll', handleSkillsAnimation);
+}
+
+// EVENT LISTENERS
+
+document.addEventListener('DOMContentLoaded', initializeApp);
