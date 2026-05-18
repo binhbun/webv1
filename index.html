@@ -169,10 +169,8 @@
                 </div>
                 <p> <b>Khoindvn.com cung cấp Esign, KSign, certificate miễn phí, cấu hình khoinDNS,...</b></p>
                 <div class="social-buttons">
-                    <div style="width: 100%; min-height: 250px;">
-                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4848075834287581"
-     crossorigin="anonymous"></script>
-<!-- k -->
+                    <div >
+                
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4848075834287581"
@@ -209,10 +207,8 @@
                 </div>
             </div>
             <div class="proj-collum">
-                <div style="width: 100%; min-height: 250px;">
-                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4848075834287581"
-     crossorigin="anonymous"></script>
-<!-- k -->
+                <div >
+                
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4848075834287581"
@@ -263,10 +259,7 @@
 
   <div class="esign-section hidden"></div>
   <div class="line" role="presentation">
-      <div style="width: 100%; min-height: 250px;">
-                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4848075834287581"
-     crossorigin="anonymous"></script>
-<!-- k -->
+      <div >
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4848075834287581"
@@ -312,10 +305,7 @@
             <p>Vũ Văn Khơi (Khoindvn)<strong>khoindvn@mail.com</strong>.</p>
         </section>
     <footer>
-         <div style="width: 100%; min-height: 250px;">
-                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4848075834287581"
-     crossorigin="anonymous"></script>
-<!-- k -->
+         <div >
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4848075834287581"
@@ -385,11 +375,18 @@
   const loader = document.getElementById("loader");
   const content = document.getElementById("content");
 
-  // Ẩn màn hình loading
   loader.style.display = "none";
 
-  // Hiển thị nội dung chính
   content.style.display = "block";
+
+  const adCount = document.querySelectorAll('ins.adsbygoogle').length;
+  for (let i = 0; i < adCount; i++) {
+      try {
+          (window.adsbygoogle = window.window.adsbygoogle || []).push({});
+      } catch (e) {
+          console.error("Lỗi tải ad vị trí " + i, e);
+      }
+  }
 });</script>
 <script src="./files/main.js"></script>
 <script src="./files/app.js"></script>
