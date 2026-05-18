@@ -9,22 +9,22 @@ const TYPING_CONFIG = {
 };
 
 const SOCIALS = [
-    {
-        name: 'facebook',
-        url: 'https://www.facebook.com/share/1XH7kThUjd/?mibextid=wwXIfr'
-    },
-    {
-        name: 'messenger',
-        url: 'https://m.me/khoindvn.esigncert'
-    },
-    {
-        name: 'telegram',
-        url: 'https://t.me/m/7P3IVuTSYTQ1'
-    },
-    {
-        name: 'zalo',
-        url: 'https://zalo.me/0386495528'
-    }
+    // {
+    //     name: 'facebook',
+    //     url: 'https://www.facebook.com/share/1XH7kThUjd/?mibextid=wwXIfr'
+    // },
+    // {
+    //     name: 'messenger',
+    //     url: 'https://m.me/khoindvn.esigncert'
+    // },
+    // {
+    //     name: 'telegram',
+    //     url: 'https://t.me/m/7P3IVuTSYTQ1'
+    // },
+    // {
+    //     name: 'zalo',
+    //     url: 'https://zalo.me/0386495528'
+    // }
 ];
 
 // TYPING ANIMATION STATE
