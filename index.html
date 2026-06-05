@@ -402,49 +402,40 @@
 
     const switchTab = (tabId) => {
         if (tabId === "esign") {
-            // Active Tab ESign
             tabEsign?.classList.add("active");
             tabKsign?.classList.remove("active");
             tabEsign?.setAttribute("aria-selected", "true");
             tabKsign?.setAttribute("aria-selected", "false");
 
-            // Hiển thị Panel ESign, ẩn KSign
             if (panelEsign) panelEsign.style.display = "block";
             if (panelKsign) panelKsign.style.display = "none";
 
-            // Di chuyển cục trượt về vị trí đầu (ESign)
             if (segThumb && tabEsign) {
                 segThumb.style.width = `${tabEsign.offsetWidth}px`;
                 segThumb.style.transform = "translateX(0px)";
             }
         } else {
-            // Active Tab KSign
             tabKsign?.classList.add("active");
             tabEsign?.classList.remove("active");
             tabKsign?.setAttribute("aria-selected", "true");
             tabEsign?.setAttribute("aria-selected", "false");
 
-            // Hiển thị Panel KSign, ẩn ESign
             if (panelEsign) panelEsign.style.display = "none";
             if (panelKsign) panelKsign.style.display = "block";
 
-            // Di chuyển cục trượt sang vị trí KSign
             if (segThumb && tabEsign && tabKsign) {
                 segThumb.style.width = `${tabKsign.offsetWidth}px`;
-                // Dịch chuyển một khoảng bằng chính chiều rộng nút ESign
                 segThumb.style.transform = `translateX(${tabEsign.offsetWidth}px)`;
             }
         }
     };
 
-    // Lắng nghe sự kiện Click
     tabEsign?.addEventListener("click", () => switchTab("esign"));
     tabKsign?.addEventListener("click", () => switchTab("ksign"));
 
-    // Khởi tạo trạng thái mặc định ban đầu là ESign khi vừa tải trang
     setTimeout(() => {
         switchTab("esign");
-    }, 50); // Delay nhẹ để trình duyệt kịp tính toán offsetWidth của phần tử
+    }, 50); 
 });
 </script>
 <script>(function(s){s.dataset.zone='9938701',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
