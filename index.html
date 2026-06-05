@@ -335,8 +335,8 @@ window.onload = loadGitHubContent;
   position: relative;
   display: inline-flex;
   background: var(--color-background-secondary);
-  border: 0.5px solid var(--color-border-tertiary);
-  border-radius: var(--border-radius-lg);
+  border: 2px solid #1a6fd4;  
+  border-radius: 50px;          
   padding: 4px;
 }
 
@@ -344,8 +344,8 @@ window.onload = loadGitHubContent;
   position: absolute;
   top: 4px;
   bottom: 4px;
-  background: #1a6fd4;  /* blue */
-  border-radius: calc(var(--border-radius-lg) - 2px);
+  background: #1a6fd4;
+  border-radius: 50px;       
   transition: transform .22s cubic-bezier(.4,0,.2,1), width .22s;
   z-index: 0;
 }
@@ -355,18 +355,18 @@ window.onload = loadGitHubContent;
   z-index: 1;
   background: none;
   border: none;
-  padding: 10px 32px;   /* to hơn */
-  font-size: 16px;       /* chữ lớn hơn */
+  padding: 10px 32px;
+  font-size: 16px;
   font-weight: 500;
-  color: #888;
+  color: #1a6fd4;              
   cursor: pointer;
-  border-radius: calc(var(--border-radius-lg) - 2px);
+  border-radius: 50px;        
   transition: color .18s;
   white-space: nowrap;
 }
 
 .seg-btn.active {
-  color: #ffffff;        /* chữ trắng khi active */
+  color: #ffffff;
 }
 
 .tab-panel { display: none; }
