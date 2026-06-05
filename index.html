@@ -274,6 +274,62 @@
     </footer>
 </div>
 </main>
+    <style>
+        /* Căn giữa thanh chọn tab */
+.seg-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    width: 100%;
+}
+
+.seg-track {
+    position: relative;
+    display: flex;
+    background: #222; /* Màu nền thanh track */
+    border-radius: 30px;
+    padding: 4px;
+    border: 1px solid #333;
+}
+
+.seg-btn {
+    position: relative;
+    background: none;
+    border: none;
+    color: #888;
+    padding: 10px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 2;
+    transition: color 0.3s ease;
+    min-width: 100px;
+}
+
+.seg-btn.active {
+    color: #fff; /* Chữ màu trắng khi active */
+}
+
+/* Thanh trượt nền phía sau */
+.seg-thumb {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    height: calc(100% - 8px);
+    background: #a78bfa; /* Màu tím giống như toast thông báo cũ của bạn */
+    border-radius: 26px;
+    z-index: 1;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s ease;
+}
+
+/* Phong cách cho các panel nội dung */
+.tab-panel {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+        </style>
 <!-- <style>
    #loader {
   position: fixed;
@@ -336,7 +392,61 @@
 
 });</script> -->
 <script src="./files/main.js"></script>
-<script src="./files/app.js"></script>
+<script src="./files/app.js">
+    document.addEventListener("DOMContentLoaded", () => {
+    const tabEsign = document.getElementById("tab-esign");
+    const tabKsign = document.getElementById("tab-ksign");
+    const panelEsign = document.getElementById("panel-esign");
+    const panelKsign = document.getElementById("panel-ksign");
+    const segThumb = document.getElementById("seg-thumb");
+
+    const switchTab = (tabId) => {
+        if (tabId === "esign") {
+            // Active Tab ESign
+            tabEsign?.classList.add("active");
+            tabKsign?.classList.remove("active");
+            tabEsign?.setAttribute("aria-selected", "true");
+            tabKsign?.setAttribute("aria-selected", "false");
+
+            // Hiển thị Panel ESign, ẩn KSign
+            if (panelEsign) panelEsign.style.display = "block";
+            if (panelKsign) panelKsign.style.display = "none";
+
+            // Di chuyển cục trượt về vị trí đầu (ESign)
+            if (segThumb && tabEsign) {
+                segThumb.style.width = `${tabEsign.offsetWidth}px`;
+                segThumb.style.transform = "translateX(0px)";
+            }
+        } else {
+            // Active Tab KSign
+            tabKsign?.classList.add("active");
+            tabEsign?.classList.remove("active");
+            tabKsign?.setAttribute("aria-selected", "true");
+            tabEsign?.setAttribute("aria-selected", "false");
+
+            // Hiển thị Panel KSign, ẩn ESign
+            if (panelEsign) panelEsign.style.display = "none";
+            if (panelKsign) panelKsign.style.display = "block";
+
+            // Di chuyển cục trượt sang vị trí KSign
+            if (segThumb && tabEsign && tabKsign) {
+                segThumb.style.width = `${tabKsign.offsetWidth}px`;
+                // Dịch chuyển một khoảng bằng chính chiều rộng nút ESign
+                segThumb.style.transform = `translateX(${tabEsign.offsetWidth}px)`;
+            }
+        }
+    };
+
+    // Lắng nghe sự kiện Click
+    tabEsign?.addEventListener("click", () => switchTab("esign"));
+    tabKsign?.addEventListener("click", () => switchTab("ksign"));
+
+    // Khởi tạo trạng thái mặc định ban đầu là ESign khi vừa tải trang
+    setTimeout(() => {
+        switchTab("esign");
+    }, 50); // Delay nhẹ để trình duyệt kịp tính toán offsetWidth của phần tử
+});
+</script>
 <script>(function(s){s.dataset.zone='9938701',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
   <script src="https://chivalrousmuseumsank.com/a9/be/72/a9be7275a47dedd5290ee960d77da293.js"></script>
   
