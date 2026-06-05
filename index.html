@@ -223,38 +223,6 @@
         }
     }
     window.onload = loadGitHubContent;
-
-   const tabs = [
-  { btn: document.getElementById('tab-esign'), panel: document.getElementById('panel-esign') },
-  { btn: document.getElementById('tab-ksign'), panel: document.getElementById('panel-ksign') }
-];
-const thumb = document.getElementById('seg-thumb');
-
-function updateThumb(btnEl) {
-  const trackRect = document.getElementById('seg-track').getBoundingClientRect();
-  const btnRect = btnEl.getBoundingClientRect();
-  thumb.style.width = btnRect.width + 'px';
-  thumb.style.transform = `translateX(${btnRect.left - trackRect.left - 4}px)`;
-}
-
-function activate(idx) {
-  tabs.forEach((t, i) => {
-    const on = i === idx;
-    t.btn.classList.toggle('active', on);
-    t.btn.setAttribute('aria-selected', on);
-    t.panel.classList.toggle('visible', on);
-  });
-  updateThumb(tabs[idx].btn);
-}
-
-tabs.forEach((t, i) => t.btn.addEventListener('click', () => activate(i)));
-
-// Khởi tạo — mặc định ESign (index 0)
-requestAnimationFrame(() => {
-  thumb.style.transition = 'none';
-  updateThumb(tabs[0].btn);
-  requestAnimationFrame(() => { thumb.style.transition = ''; });
-});
 </script>
     </section>
 <!-- <div class="ios-switch">
