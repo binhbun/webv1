@@ -200,29 +200,83 @@
         </section>
        
             <section aria-labelledby="esign-title">
-      <h2 id="esign-title" style="text-align:center; margin-top:1.5em;">APP</h2>
-                 <center>
-  <div id="github-content-container">
+              <div class="seg-wrap" id="bypass" role="tablist" aria-label="Chọn loại chứng chỉ">
+  <div class="seg-track" id="seg-track">
+    <div class="seg-thumb" id="seg-thumb"></div>
+    <button class="seg-btn active" id="tab-esign" role="tab" aria-selected="true" aria-controls="panel-esign">ESign</button>
+    <button class="seg-btn" id="tab-ksign" role="tab" aria-selected="false" aria-controls="panel-ksign">KSign</button>
+  </div>
 </div>
-                 </center>
+
+<div id="panel-esign" role="tabpanel" aria-labelledby="tab-esign" class="tab-panel visible">
+  <p style="color: var(--color-text-secondary); font-size: 13px;">Đang tải...</p>
+</div>
+
+<div id="panel-ksign" role="tabpanel" aria-labelledby="tab-ksign" class="tab-panel">
+  <p style="color: var(--color-text-secondary); font-size: 13px;">Đang tải...</p>
+</div>
+
 <script>
-    async function loadGitHubContent() {
-        const url = 'https://raw.githubusercontent.com/CLATechTeams/esign/refs/heads/main/index.html';
-        
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error('...');
-            
-            const html = await response.text();
-            
-            document.getElementById('github-content-container').innerHTML = html;
-            
-        } catch (error) {
-            console.error('Lỗi:', error);
-            document.getElementById('github-content-container').innerHTML = '***';
-        }
-    }
-    window.onload = loadGitHubContent;
+async function loadGitHubContent() {
+  const url = 'https://raw.githubusercontent.com/CLATechTeams/esign/refs/heads/main/index.html';
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Fetch failed');
+    const html = await response.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    const esign = doc.getElementById('esign-content');
+    const ksign = doc.getElementById('ksign-content');
+
+    document.getElementById('panel-esign').innerHTML = esign
+      ? esign.innerHTML : '<p>Không tìm thấy nội dung ESign.</p>';
+    document.getElementById('panel-ksign').innerHTML = ksign
+      ? ksign.innerHTML : '<p>Không tìm thấy nội dung KSign.</p>';
+
+  } catch (error) {
+    console.error('Lỗi:', error);
+    document.getElementById('panel-esign').innerHTML = '<p>Lỗi tải nội dung.</p>';
+    document.getElementById('panel-ksign').innerHTML = '<p>Lỗi tải nội dung.</p>';
+  }
+}
+
+// Tab logic
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = [
+    { btn: document.getElementById('tab-esign'), panel: document.getElementById('panel-esign') },
+    { btn: document.getElementById('tab-ksign'), panel: document.getElementById('panel-ksign') }
+  ];
+  const thumb = document.getElementById('seg-thumb');
+
+  function updateThumb(btnEl) {
+    const trackRect = document.getElementById('seg-track').getBoundingClientRect();
+    const btnRect = btnEl.getBoundingClientRect();
+    thumb.style.width = btnRect.width + 'px';
+    thumb.style.transform = `translateX(${btnRect.left - trackRect.left - 4}px)`;
+  }
+
+  function activate(idx) {
+    tabs.forEach((t, i) => {
+      const on = i === idx;
+      t.btn.classList.toggle('active', on);
+      t.btn.setAttribute('aria-selected', String(on));
+      t.panel.classList.toggle('visible', on);
+    });
+    updateThumb(tabs[idx].btn);
+  }
+
+  tabs.forEach((t, i) => t.btn.addEventListener('click', () => activate(i)));
+
+  requestAnimationFrame(() => {
+    thumb.style.transition = 'none';
+    updateThumb(tabs[0].btn);
+    requestAnimationFrame(() => { thumb.style.transition = ''; });
+  });
+});
+
+window.onload = loadGitHubContent;
 </script>
     </section>
 <!-- <div class="ios-switch">
