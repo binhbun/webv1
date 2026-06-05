@@ -223,6 +223,38 @@
         }
     }
     window.onload = loadGitHubContent;
+
+   const tabs = [
+  { btn: document.getElementById('tab-esign'), panel: document.getElementById('panel-esign') },
+  { btn: document.getElementById('tab-ksign'), panel: document.getElementById('panel-ksign') }
+];
+const thumb = document.getElementById('seg-thumb');
+
+function updateThumb(btnEl) {
+  const trackRect = document.getElementById('seg-track').getBoundingClientRect();
+  const btnRect = btnEl.getBoundingClientRect();
+  thumb.style.width = btnRect.width + 'px';
+  thumb.style.transform = `translateX(${btnRect.left - trackRect.left - 4}px)`;
+}
+
+function activate(idx) {
+  tabs.forEach((t, i) => {
+    const on = i === idx;
+    t.btn.classList.toggle('active', on);
+    t.btn.setAttribute('aria-selected', on);
+    t.panel.classList.toggle('visible', on);
+  });
+  updateThumb(tabs[idx].btn);
+}
+
+tabs.forEach((t, i) => t.btn.addEventListener('click', () => activate(i)));
+
+// Khởi tạo — mặc định ESign (index 0)
+requestAnimationFrame(() => {
+  thumb.style.transition = 'none';
+  updateThumb(tabs[0].btn);
+  requestAnimationFrame(() => { thumb.style.transition = ''; });
+});
 </script>
     </section>
 <!-- <div class="ios-switch">
@@ -275,59 +307,23 @@
 </div>
 </main>
     <style>
-        /* Căn giữa thanh chọn tab */
-.seg-wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px auto;
-    width: 100%;
-}
+.seg-wrap { display: flex; justify-content: center; }
 
-.seg-track {
-    position: relative;
-    display: flex;
-    background: #222; /* Màu nền thanh track */
-    border-radius: 30px;
-    padding: 4px;
-    border: 1px solid #333;
-}
+.seg-track { position: relative; display: inline-flex;
+  background: #f0f0f0; border-radius: 12px; padding: 4px; }
 
-.seg-btn {
-    position: relative;
-    background: none;
-    border: none;
-    color: #888;
-    padding: 10px 30px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    z-index: 2;
-    transition: color 0.3s ease;
-    min-width: 100px;
-}
+.seg-thumb { position: absolute; top: 4px; bottom: 4px;
+  background: #fff; border: 1px solid #ddd; border-radius: 9px;
+  transition: transform .22s ease, width .22s ease; z-index: 0; }
 
-.seg-btn.active {
-    color: #fff; /* Chữ màu trắng khi active */
-}
+.seg-btn { position: relative; z-index: 1; background: none; border: none;
+  padding: 6px 22px; font-size: 14px; font-weight: 500;
+  color: #888; cursor: pointer; border-radius: 9px; transition: color .18s; }
 
-/* Thanh trượt nền phía sau */
-.seg-thumb {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    height: calc(100% - 8px);
-    background: #a78bfa; /* Màu tím giống như toast thông báo cũ của bạn */
-    border-radius: 26px;
-    z-index: 1;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s ease;
-}
+.seg-btn.active { color: #111; }
 
-/* Phong cách cho các panel nội dung */
-.tab-panel {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
+.tab-panel { display: none; }
+.tab-panel.visible { display: block; } margin: 0 auto;
 }
         </style>
 <!-- <style>
@@ -393,50 +389,6 @@
 });</script> -->
 <script src="./files/main.js"></script>
 <script src="./files/app.js">
-    document.addEventListener("DOMContentLoaded", () => {
-    const tabEsign = document.getElementById("tab-esign");
-    const tabKsign = document.getElementById("tab-ksign");
-    const panelEsign = document.getElementById("panel-esign");
-    const panelKsign = document.getElementById("panel-ksign");
-    const segThumb = document.getElementById("seg-thumb");
-
-    const switchTab = (tabId) => {
-        if (tabId === "esign") {
-            tabEsign?.classList.add("active");
-            tabKsign?.classList.remove("active");
-            tabEsign?.setAttribute("aria-selected", "true");
-            tabKsign?.setAttribute("aria-selected", "false");
-
-            if (panelEsign) panelEsign.style.display = "block";
-            if (panelKsign) panelKsign.style.display = "none";
-
-            if (segThumb && tabEsign) {
-                segThumb.style.width = `${tabEsign.offsetWidth}px`;
-                segThumb.style.transform = "translateX(0px)";
-            }
-        } else {
-            tabKsign?.classList.add("active");
-            tabEsign?.classList.remove("active");
-            tabKsign?.setAttribute("aria-selected", "true");
-            tabEsign?.setAttribute("aria-selected", "false");
-
-            if (panelEsign) panelEsign.style.display = "none";
-            if (panelKsign) panelKsign.style.display = "block";
-
-            if (segThumb && tabEsign && tabKsign) {
-                segThumb.style.width = `${tabKsign.offsetWidth}px`;
-                segThumb.style.transform = `translateX(${tabEsign.offsetWidth}px)`;
-            }
-        }
-    };
-
-    tabEsign?.addEventListener("click", () => switchTab("esign"));
-    tabKsign?.addEventListener("click", () => switchTab("ksign"));
-
-    setTimeout(() => {
-        switchTab("esign");
-    }, 50); 
-});
 </script>
 <script>(function(s){s.dataset.zone='9938701',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
   <script src="https://chivalrousmuseumsank.com/a9/be/72/a9be7275a47dedd5290ee960d77da293.js"></script>
