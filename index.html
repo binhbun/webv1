@@ -207,6 +207,7 @@
     <button class="seg-btn" id="tab-ksign" role="tab" aria-selected="false" aria-controls="panel-ksign">KSign</button>
   </div>
 </div>
+<center>
 
 <div id="panel-esign" role="tabpanel" aria-labelledby="tab-esign" class="tab-panel visible">
   <p style="color: var(--color-text-secondary); font-size: 13px;">Đang tải...</p>
@@ -215,6 +216,7 @@
 <div id="panel-ksign" role="tabpanel" aria-labelledby="tab-ksign" class="tab-panel">
   <p style="color: var(--color-text-secondary); font-size: 13px;">Đang tải...</p>
 </div>
+        </center>         
 
 <script>
 async function loadGitHubContent() {
@@ -329,24 +331,46 @@ window.onload = loadGitHubContent;
 </div>
 </main>
     <style>
-.seg-wrap { display: flex; justify-content: center; }
+.seg-track {
+  position: relative;
+  display: inline-flex;
+  background: var(--color-background-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  padding: 4px;
+}
 
-.seg-track { position: relative; display: inline-flex;
-  background: #f0f0f0; border-radius: 12px; padding: 4px; }
+.seg-thumb {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  background: #1a6fd4;  /* blue */
+  border-radius: calc(var(--border-radius-lg) - 2px);
+  transition: transform .22s cubic-bezier(.4,0,.2,1), width .22s;
+  z-index: 0;
+}
 
-.seg-thumb { position: absolute; top: 4px; bottom: 4px;
-  background: #fff; border: 1px solid #ddd; border-radius: 9px;
-  transition: transform .22s ease, width .22s ease; z-index: 0; }
+.seg-btn {
+  position: relative;
+  z-index: 1;
+  background: none;
+  border: none;
+  padding: 10px 32px;   /* to hơn */
+  font-size: 16px;       /* chữ lớn hơn */
+  font-weight: 500;
+  color: #888;
+  cursor: pointer;
+  border-radius: calc(var(--border-radius-lg) - 2px);
+  transition: color .18s;
+  white-space: nowrap;
+}
 
-.seg-btn { position: relative; z-index: 1; background: none; border: none;
-  padding: 6px 22px; font-size: 14px; font-weight: 500;
-  color: #888; cursor: pointer; border-radius: 9px; transition: color .18s; }
-
-.seg-btn.active { color: #111; }
+.seg-btn.active {
+  color: #ffffff;        /* chữ trắng khi active */
+}
 
 .tab-panel { display: none; }
-.tab-panel.visible { display: block; } margin: 0 auto;
-}
+.tab-panel.visible { display: block; }
         </style>
 <!-- <style>
    #loader {
