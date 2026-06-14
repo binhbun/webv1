@@ -83,7 +83,6 @@ SubTitle.Size            = UDim2.new(1, -20, 0, 20)
 SubTitle.Position        = UDim2.new(0, 10, 0, 52)
 SubTitle.BackgroundTransparency = 1
 
--- ── Input row: TextBox + Paste button ──────────────────────────────
 local InputRow = Instance.new("Frame", MainFrame)
 InputRow.BackgroundTransparency = 1
 InputRow.Position = UDim2.new(0.05, 0, 0, 85)
@@ -105,34 +104,6 @@ IS.Color        = Color3.fromRGB(255, 0, 40)
 IS.Thickness    = 1.2
 IS.Transparency = 0.5
 
--- ── Nút Paste ──────────────────────────────────────────────────────
-local PasteBtn = Instance.new("TextButton", InputRow)
-PasteBtn.Text            = "📋 Dán"
-PasteBtn.Font            = Enum.Font.GothamBold
-PasteBtn.TextSize        = 11
-PasteBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
-PasteBtn.TextColor3      = Color3.fromRGB(200, 200, 255)
-PasteBtn.Position        = UDim2.new(1, -46, 0, 0)
-PasteBtn.Size            = UDim2.new(0, 46, 1, 0)
-Instance.new("UICorner", PasteBtn).CornerRadius = UDim.new(0, 10)
-local PS = Instance.new("UIStroke", PasteBtn)
-PS.Color     = Color3.fromRGB(100, 100, 200)
-PS.Thickness = 1
-
-PasteBtn.MouseButton1Click:Connect(function()
-    local ok, text = pcall(function()
-        return getclipboard and getclipboard() or ""
-    end)
-    if ok and text and text ~= "" then
-        KeyInput.Text = text:gsub("%s+", "")
-        notify("📋 Đã dán key!", Color3.fromRGB(100, 100, 255))
-    else
-        notify("⚠️ Clipboard trống hoặc không hỗ trợ!", Color3.fromRGB(255, 150, 0))
-    end
-end)
--- ───────────────────────────────────────────────────────────────────
-
--- ── GET KEY button (blue, nổi bật như Activate) ────────────────────
 local GetKeyBtn = Instance.new("TextButton", MainFrame)
 GetKeyBtn.Text            = "🔑  GET KEY"
 GetKeyBtn.Font            = Enum.Font.GothamBold
@@ -209,46 +180,46 @@ local function notify(msg, color)
     ng:Destroy()
 end
 
--- ── GET KEY: copy + mở link ────────────────────────────────────────
 GetKeyBtn.MouseButton1Click:Connect(function()
-    -- 1. Copy link vào clipboard
-    if setclipboard then
-        pcall(function() setclipboard(GET_KEY_URL) end)
-    end
 
-    -- 2. Mở link bằng trình duyệt (thử theo thứ tự executor phổ biến)
+    pcall(function()
+        if setclipboard then
+            setclipboard(GET_KEY_URL)
+        elseif Clipboard and Clipboard.set then
+            Clipboard.set(GET_KEY_URL)
+        end
+    end)
+
     local opened = false
 
     if not opened and syn and syn.open_url then
-        pcall(function() syn.open_url(GET_KEY_URL) end)
-        opened = true
+        local ok = pcall(syn.open_url, GET_KEY_URL)
+        if ok then opened = true end
     end
 
-    if not opened and (KRNL_LOADED or identifyexecutor and identifyexecutor():lower():find("krnl")) then
-        pcall(function() shellexecute(GET_KEY_URL) end)
-        opened = true
+    if not opened and fluxus and fluxus.request then
+        local ok = pcall(function() open_url(GET_KEY_URL) end)
+        if ok then opened = true end
     end
 
     if not opened and shellexecute then
-        pcall(function() shellexecute(GET_KEY_URL) end)
-        opened = true
+        local ok = pcall(shellexecute, GET_KEY_URL)
+        if ok then opened = true end
     end
 
-    if not opened and os and os.execute then
+    if not opened and open_url then
+        local ok = pcall(open_url, GET_KEY_URL)
+        if ok then opened = true end
+    end
+
+    if not opened then
         pcall(function()
-            -- Windows
             os.execute('start "" "' .. GET_KEY_URL .. '"')
         end)
-        opened = true
     end
 
-    if opened then
-        notify("✅ Đã mở trình duyệt & copy link!", Color3.fromRGB(0, 120, 255))
-    else
-        notify("📋 Đã copy link! Mở trình duyệt thủ công.", Color3.fromRGB(0, 120, 255))
-    end
+    notify("✅ Đã copy link! Mở Link Bằng trình duyệt để lấy key...", Color3.fromRGB(0, 120, 255))
 end)
--- ───────────────────────────────────────────────────────────────────
 
 ActivateBtn.MouseButton1Click:Connect(function()
     local key = KeyInput.Text:gsub("%s+", "")
