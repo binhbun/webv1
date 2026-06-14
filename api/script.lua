@@ -1,6 +1,5 @@
-
-local WORKER_URL = "https://keyscrpit.teamgamehub99.workers.dev/getkey"
-local GET_KEY_URL = 'https://bbmkts.com/go/scriptroblox"
+local WORKER_URL = "https://keyscrpit.teamgamehub99.workers.dev"
+local GET_KEY_URL = "https://bbmkts.com/go/scriptroblox"
 
 local HttpService      = game:GetService("HttpService")
 local TweenService     = game:GetService("TweenService")
@@ -8,9 +7,6 @@ local UserInputService = game:GetService("UserInputService")
 
 local FILE_NAME = "KeyCachebbgmv.txt"
 
--- ----------------------------------------------------------------
--- HWID
--- ----------------------------------------------------------------
 local function getHWID()
     local ok, id = pcall(function()
         return tostring(game:GetService("RbxAnalyticsService"):GetClientId())
@@ -18,9 +14,6 @@ local function getHWID()
     return ok and id or "unknown"
 end
 
--- ----------------------------------------------------------------
--- Validate key với server
--- ----------------------------------------------------------------
 local function validateKey(key)
     local ok, res = pcall(function()
         return HttpService:RequestAsync({
@@ -31,14 +24,10 @@ local function validateKey(key)
         })
     end)
     if not ok then return false, "Không thể kết nối server" end
-
     local data = HttpService:JSONDecode(res.Body)
     return data.valid, data.reason, data.remaining_minutes
 end
 
--- ----------------------------------------------------------------
--- Chạy script chính
--- ----------------------------------------------------------------
 local function ExecuteMain()
     loadstring(game:HttpGet(
         "https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua",
@@ -46,9 +35,7 @@ local function ExecuteMain()
     ))()
 end
 
--- ----------------------------------------------------------------
--- Kiểm tra cache local
--- ----------------------------------------------------------------
+-- Cache check
 if readfile and isfile and isfile(FILE_NAME) then
     local cached = (readfile(FILE_NAME) or ""):gsub("%s+", "")
     if cached ~= "" then
@@ -57,14 +44,11 @@ if readfile and isfile and isfile(FILE_NAME) then
             ExecuteMain()
             return
         end
-        -- Cache hết hạn → xóa
         if writefile then pcall(function() writefile(FILE_NAME, "") end) end
     end
 end
 
--- ================================================================
 -- UI
--- ================================================================
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "KeySystem"
 ScreenGui.Parent = game:GetService("CoreGui")
@@ -111,7 +95,9 @@ KeyInput.TextSize        = 13
 KeyInput.ClearTextOnFocus = false
 Instance.new("UICorner", KeyInput).CornerRadius = UDim.new(0, 10)
 local IS = Instance.new("UIStroke", KeyInput)
-IS.Color = Color3.fromRGB(255, 0, 40) IS.Thickness = 1.2 IS.Transparency = 0.5
+IS.Color = Color3.fromRGB(255, 0, 40)
+IS.Thickness = 1.2
+IS.Transparency = 0.5
 
 local GetKeyBtn = Instance.new("TextButton", MainFrame)
 GetKeyBtn.Text           = "🔑  GET KEY"
@@ -162,24 +148,24 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
--- Notify
 local function notify(msg, color)
     local ng  = Instance.new("ScreenGui", game:GetService("CoreGui"))
     local box = Instance.new("Frame", ng)
     local txt = Instance.new("TextLabel", box)
-    box.Size                 = UDim2.new(0, 320, 0, 46)
-    box.Position             = UDim2.new(0.5, -160, 0, -55)
-    box.BackgroundColor3     = Color3.fromRGB(12, 12, 16)
+    box.Size                   = UDim2.new(0, 320, 0, 46)
+    box.Position               = UDim2.new(0.5, -160, 0, -55)
+    box.BackgroundColor3       = Color3.fromRGB(12, 12, 16)
     box.BackgroundTransparency = 0.05
     Instance.new("UICorner", box).CornerRadius = UDim.new(0, 12)
     local s = Instance.new("UIStroke", box)
-    s.Color = color s.Thickness = 2
-    txt.Size                 = UDim2.new(1, 0, 1, 0)
+    s.Color = color
+    s.Thickness = 2
+    txt.Size                   = UDim2.new(1, 0, 1, 0)
     txt.BackgroundTransparency = 1
-    txt.Text                 = msg
-    txt.TextColor3           = Color3.fromRGB(255, 255, 255)
-    txt.Font                 = Enum.Font.GothamBold
-    txt.TextSize             = 13
+    txt.Text                   = msg
+    txt.TextColor3             = Color3.fromRGB(255, 255, 255)
+    txt.Font                   = Enum.Font.GothamBold
+    txt.TextSize               = 13
     TweenService:Create(box, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
         { Position = UDim2.new(0.5, -160, 0, 40) }):Play()
     task.wait(2.8)
@@ -188,17 +174,26 @@ local function notify(msg, color)
     ng:Destroy()
 end
 
--- GET KEY button
 GetKeyBtn.MouseButton1Click:Connect(function()
+    -- Copy link vào clipboard
     if setclipboard then
         setclipboard(GET_KEY_URL)
-        notify("✅ Đã copy link lấy key! Mở trình duyệt để lấy key.", Color3.fromRGB(255, 0, 40))
     end
-    -- Nếu executor hỗ trợ:
-    -- syn.open_url(GET_KEY_URL)
+
+    -- Tự động mở trình duyệt (thử lần lượt các executor)
+    if syn and syn.open_url then
+        syn.open_url(GET_KEY_URL)
+    elseif shellexecute then
+        shellexecute(GET_KEY_URL)
+    elseif os and os.execute then
+        os.execute('start "" "' .. GET_KEY_URL .. '"')
+    elseif writefile then
+        -- Fallback: chỉ copy
+    end
+
+    notify("✅ Đã copy link & mở trình duyệt!", Color3.fromRGB(0, 180, 255))
 end)
 
--- ACTIVATE button
 ActivateBtn.MouseButton1Click:Connect(function()
     local key = KeyInput.Text:gsub("%s+", "")
     if key == "" then
@@ -215,12 +210,11 @@ ActivateBtn.MouseButton1Click:Connect(function()
         ActivateBtn.Text             = "✅ TRUY CẬP THÀNH CÔNG"
         ActivateBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 70)
 
-        -- Lưu cache
         if writefile then
             pcall(function() writefile(FILE_NAME, key) end)
         end
 
-        local timeMsg = mins and ("Còn " .. mins .. " phút") or ""
+        local timeMsg = mins and ("Còn " .. tostring(mins) .. " phút") or ""
         notify("🎉 Kích hoạt thành công! " .. timeMsg, Color3.fromRGB(0, 200, 80))
 
         task.wait(0.6)
